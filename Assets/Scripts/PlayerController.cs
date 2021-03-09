@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // forward / backwards movements
-    private float speed = 9.0f;
-    private float turnSpeed = 9.0f;
+    private float speed = 6.0f;
+    public float turnSpeed = 100.0f;
 
     private float horizontalInput;
     private float verticalInput;
@@ -22,11 +22,11 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
-        Debug.Log(Time.deltaTime);
+        Debug.Log(horizontalInput);
         // Car Speed Unspeed
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * verticalInput);
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * -verticalInput);
         // Car Rotates
-        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+        transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput);
 
     }
 }
