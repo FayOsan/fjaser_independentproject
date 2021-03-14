@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     // forward / backwards movements
     private float speed = 6.0f;
-    public float turnSpeed = 100.0f;
+    public float turnSpeed = 1000.0f;
 
     private float horizontalInput;
     private float verticalInput;
