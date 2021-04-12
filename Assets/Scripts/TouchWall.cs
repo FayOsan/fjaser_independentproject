@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUp : MonoBehaviour
+public class TouchWall : MonoBehaviour
 {
-    public AudioClip Collect;
-
-    public AudioSource asPlayer;
+    private Animator wall;
     // Start is called before the first frame update
     void Start()
     {
-        asPlayer = GetComponent<AudioSource>();
+        
     }
 
     // Update is called once per frame
@@ -21,10 +19,10 @@ public class PickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Dollar"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.SetActive(false);
-            asPlayer.PlayOneShot(Collect, 1);
+            wall.SetBool("touchwall", true);
+            Debug.Log("TOUCHGING THE WALL GR");
         }
     }
 }

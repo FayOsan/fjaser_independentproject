@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Dollar
+  - Earth
+  - Ground
+  - Plate
   layers:
   - Default
   - TransparentFX
