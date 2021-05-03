@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
 
     public AudioSource asPlayer;
     public AudioClip Catch;
+    private Animator LeftArmA;
+
+    public ParticleSystem Dirt;
+    private bool DirtPlaying = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +28,9 @@ public class PlayerController : MonoBehaviour
         playerCtrl = GameObject.Find("Player").GetComponent<PlayerController>();
         asPlayer = GetComponent<AudioSource>();
 
-
+        LeftArmA = GameObject.Find("LeftArmJoint").GetComponent<Animator>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -36,10 +41,32 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
 
 
-        // Car Speed Unspeed
+
         transform.Translate(Vector3.forward * Time.deltaTime * speed * -verticalInput);
-        // Car Rotates
+
         transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput);
+
+        LeftArmA.SetFloat("Speed", verticalInput);
+        Debug.Log(verticalInput);
+
+
+        if(verticalInput>.01 && !DirtPlaying)
+        {
+            DirtPlaying = true;
+            Dirt.Play();
+            Debug.Log("playing dirt!");
+        }
+        else if(verticalInput<.01)
+        {
+            DirtPlaying = false;
+            Debug.Log("FALSE");
+            Dirt.Stop();
+        }
+
+        /*if (verticalInput>-.1f)
+        {
+            Dirt.Play();
+        }*/
 
     }
 
@@ -54,6 +81,7 @@ public class PlayerController : MonoBehaviour
             playerCtrl.enabled = false;
         }
     }
+
 }
 
 
