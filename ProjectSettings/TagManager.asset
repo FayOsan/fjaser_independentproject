@@ -8,6 +8,7 @@ TagManager:
   - Earth
   - Ground
   - Plate
+  - PowerUps
   layers:
   - Default
   - TransparentFX

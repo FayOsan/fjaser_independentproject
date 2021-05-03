@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource asPlayer;
     public AudioClip Catch;
     private Animator LeftArmA;
+    private Animator RightArmA;
 
     public ParticleSystem Dirt;
     private bool DirtPlaying = false;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
         asPlayer = GetComponent<AudioSource>();
 
         LeftArmA = GameObject.Find("LeftArmJoint").GetComponent<Animator>();
+        RightArmA = GameObject.Find("RightArmJoint").GetComponent<Animator>();
     }
 
 
@@ -47,19 +49,18 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput);
 
         LeftArmA.SetFloat("Speed", verticalInput);
-        Debug.Log(verticalInput);
+        RightArmA.SetFloat("Speed", verticalInput);
 
 
         if(verticalInput>.01 && !DirtPlaying)
         {
             DirtPlaying = true;
             Dirt.Play();
-            Debug.Log("playing dirt!");
+
         }
         else if(verticalInput<.01)
         {
             DirtPlaying = false;
-            Debug.Log("FALSE");
             Dirt.Stop();
         }
 
@@ -80,6 +81,11 @@ public class PlayerController : MonoBehaviour
             asPlayer.PlayOneShot(Catch, 1);
             playerCtrl.enabled = false;
         }
+    }
+
+    public void Dash()
+    {
+        Debug.Log("DASHIE");
     }
 
 }
