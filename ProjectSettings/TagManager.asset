@@ -9,6 +9,8 @@ TagManager:
   - Ground
   - Plate
   - PowerUps
+  - Enemy
+  - Astroid
   layers:
   - Default
   - TransparentFX

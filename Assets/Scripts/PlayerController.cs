@@ -13,19 +13,20 @@ public class PlayerController : MonoBehaviour
 
     private float horizontalInput;
     private float verticalInput;
-    public bool gameOver = false;
 
-    public AudioSource asPlayer;
+    private AudioSource asPlayer;
     public AudioClip Catch;
     private Animator LeftArmA;
     private Animator RightArmA;
 
     public ParticleSystem Dirt;
     private bool DirtPlaying = false;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         playerCtrl = GameObject.Find("Player").GetComponent<PlayerController>();
         asPlayer = GetComponent<AudioSource>();
 
@@ -37,33 +38,35 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-
-
-
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * -verticalInput);
-
-        transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput);
-
-        LeftArmA.SetFloat("Speed", verticalInput);
-        RightArmA.SetFloat("Speed", verticalInput);
-
-
-        if(verticalInput>.01 && !DirtPlaying)
+        if (gameManager.gameActive)
         {
-            DirtPlaying = true;
-            Dirt.Play();
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
 
-        }
-        else if(verticalInput<.01)
-        {
-            DirtPlaying = false;
-            Dirt.Stop();
-        }
 
+
+            transform.Translate(Vector3.forward * Time.deltaTime * speed * -verticalInput);
+
+            transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput);
+
+            LeftArmA.SetFloat("Speed", verticalInput);
+            RightArmA.SetFloat("Speed", verticalInput);
+
+
+            if (verticalInput > .01 && !DirtPlaying)
+            {
+                asPlayer.Play();
+                DirtPlaying = true;
+                Dirt.Play();
+
+            }
+            else if (verticalInput < .01)
+            {
+                asPlayer.Stop();
+                DirtPlaying = false;
+                Dirt.Stop();
+            }
+        }
         /*if (verticalInput>-.1f)
         {
             Dirt.Play();
@@ -77,15 +80,23 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Earth"))
         {
             Debug.Log("Game Over!!");
-            gameOver = true;
             asPlayer.PlayOneShot(Catch, 1);
-            playerCtrl.enabled = false;
+         //   playerCtrl.enabled = false;
         }
     }
 
     public void Dash()
     {
+        speed = 10;
+        StartCoroutine(PowerUpCount());
         Debug.Log("DASHIE");
+    }
+
+    IEnumerator PowerUpCount()
+    {
+        yield return new WaitForSeconds(5);
+        speed = 6;
+        
     }
 
 }

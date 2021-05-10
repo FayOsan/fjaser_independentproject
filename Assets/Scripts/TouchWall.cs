@@ -17,12 +17,12 @@ public class TouchWall : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             wall.SetBool("touchwall", true);
             Debug.Log("TOUCHGING THE WALL GR");
         }
-    }
+    }*/
 }
